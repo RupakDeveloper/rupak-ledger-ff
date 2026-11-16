@@ -16,7 +16,23 @@ function totals(rows,pays){
  const received=pays.reduce((a,p)=>a+Number(p.amount),0);
  return {count,earned,received,pending:Math.max(0,earned-received)};
 }
-function setTotals(t,prefix=''){ $(prefix+'Lobbies').textContent=t.count;$(prefix+'Earned').textContent=money(t.earned);$(prefix+'Received').textContent=money(t.received);$(prefix+'Pending').textContent=money(t.pending); }
+function setTotals(t,prefix=''){
+ const ids = prefix
+ ? ['pLobbies','pEarned','pReceived','pPending']
+ : ['totalLobbies','earned','received','pending'];
+
+ const values = [
+   t.count,
+   money(t.earned),
+   money(t.received),
+   money(t.pending)
+ ];
+
+ ids.forEach((id,i)=>{
+   const el = document.getElementById(id);
+   if(el) el.textContent = values[i];
+ });
+}
 function renderRows(target,rows,pays=[],editable=false){
  const items=[...rows.map(r=>({date:r.lobby_date,label:`${r.lobby_count} lobbies × ${money(r.rate)}`,amount:Number(r.lobby_count)*Number(r.rate),kind:'Lobby',id:r.id})),...pays.map(p=>({date:p.paid_at,label:p.note||'Payment received',amount:Number(p.amount),kind:'Payment',id:p.id}))].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
  $(target).innerHTML=items.length?items.map(x=>`<div class="record"><div><b>${escapeHtml(x.label)}</b><small>${escapeHtml(x.date)} · ${x.kind}</small></div><div class="amount"><b>${money(x.amount)}</b>${editable?`<button class="ghost delete" data-kind="${x.kind}" data-id="${x.id}">Delete</button>`:''}</div></div>`).join(''):'<p class="muted tiny">No records yet.</p>';
