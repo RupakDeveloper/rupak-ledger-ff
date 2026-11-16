@@ -6,3 +6,44 @@
 .phoneGrid select{display:block;width:100%;margin-top:7px;min-height:46px;background:#0d1220;border:1px solid #303a52;border-radius:11px;padding:10px 8px;color:#fff;font:inherit;font-size:13px}
 .phoneGrid input{margin-top:7px}
 @media(max-width:390px){.phoneGrid{grid-template-columns:minmax(125px,.85fr) minmax(0,1.15fr);gap:7px}.phoneGrid select{font-size:12px;padding:9px 5px}}
+/* RupakConvert Floating Website Button */
+.rupak-floating-link {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 16px;
+  background: #b4f36a;
+  color: #10131d;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px 0 0 12px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: 0 5px 25px rgba(180,243,106,0.18);
+  transition: all 0.3s ease;
+}
+
+.rupak-floating-link:hover {
+  padding-right: 23px;
+  background: #c6ff83;
+}
+
+.floating-dot {
+  width: 7px;
+  height: 7px;
+  background: #10131d;
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .rupak-floating-link {
+    font-size: 9px;
+    padding: 12px 10px;
+  }
+}
