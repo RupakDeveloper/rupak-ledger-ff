@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#10131d" />
+  <meta name="description" content="RUPAK LOBBY LEDGER — personal lobby accounts" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>RUPAK LOBBY LEDGER</title>
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand"><span class="mark">RL</span><div><b>RUPAK LOBBY</b><small>LEDGER</small></div></div>
+      <button id="logoutBtn" class="ghost hidden">Log out</button>
+    </header>
+    <section id="setupNotice" class="notice hidden"></section>
+    <section id="authView" class="panel auth">
+      <div class="eyebrow">YOUR ACCOUNT · YOUR LEDGER</div>
+      <h1>Manage your<br><span>lobby earnings.</span></h1>
+      <p class="muted">Create your own account or sign in to your private dashboard.</p>
+      <div class="tabs"><button class="tab active" data-tab="login">Login</button><button class="tab" data-tab="signup">Create account</button></div>
+      <form id="authForm">
+        <label>Username<input id="username" autocomplete="username" placeholder="e.g. rupakgaming" required minlength="3" maxlength="24" /></label>
+        <label id="emailLabel" class="hidden">Email<input id="email" type="email" autocomplete="email" placeholder="you@example.com" /></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" required minlength="8" /></label>
+        <button class="primary full" type="submit" id="authSubmit">Login</button>
+      </form>
+      <p id="authMsg" class="message"></p>
+    </section>
+    <section id="dashboard" class="hidden">
+      <div class="welcome"><div><div class="eyebrow">PERSONAL LEDGER</div><h1>Hi, <span id="who"></span></h1><p class="muted">Your records are saved online.</p></div><button id="shareBtn" class="secondary">Share profile</button></div>
+      <div class="stats">
+        <article><small>Total lobbies</small><strong id="totalLobbies">0</strong></article>
+        <article><small>Total earned</small><strong id="earned">₹0</strong></article>
+        <article><small>Received</small><strong id="received">₹0</strong></article>
+        <article><small>Pending</small><strong id="pending">₹0</strong></article>
+      </div>
+      <section class="panel">
+        <div class="sectionHead"><h2>Add lobby record</h2><span class="pill">CLOUD SAVED</span></div>
+        <form id="lobbyForm" class="formGrid">
+          <label>Date<input id="lobbyDate" type="date" required /></label>
+          <label>Number of lobbies<input id="lobbyCount" type="number" min="1" value="1" required /></label>
+          <label>Rate per lobby (₹)<input id="lobbyRate" type="number" min="0" step="0.01" value="10" required /></label>
+          <button class="primary full" type="submit">Add record</button>
+        </form>
+        <p id="lobbyMsg" class="message"></p>
+      </section>
+      <section class="panel">
+        <div class="sectionHead"><h2>Payment received</h2></div>
+        <form id="paymentForm" class="formGrid">
+          <label>Amount (₹)<input id="paymentAmount" type="number" min="0.01" step="0.01" required placeholder="e.g. 500" /></label>
+          <label>Note<input id="paymentNote" maxlength="80" placeholder="Payment note (optional)" /></label>
+          <button class="secondary full" type="submit">Save payment</button>
+        </form>
+        <p id="paymentMsg" class="message"></p>
+      </section>
+      <section class="panel">
+        <div class="sectionHead"><h2>QR code</h2><span class="muted tiny">Shown on your public profile</span></div>
+        <input id="qrFile" type="file" accept="image/png,image/jpeg,image/webp" />
+        <div class="qrRow"><img id="qrPreview" class="qr hidden" alt="Your payment QR code" /><button id="removeQr" class="ghost hidden" type="button">Remove QR</button></div>
+        <p id="qrMsg" class="message"></p>
+      </section>
+      <section class="panel">
+        <div class="sectionHead"><h2>Receive payment</h2><span class="pill">UPI</span></div>
+        <p class="muted tiny">Enter the amount you want to collect. The payer's UPI app will open with that amount pre-filled.</p>
+        <label>Payment amount (₹)<input id="receiveAmount" type="number" min="1" step="0.01" placeholder="Enter amount" /></label>
+        <button id="makePayQr" class="primary full" type="button">Generate payment QR</button>
+        <div id="receiveCard" class="receiveCard hidden">
+          <h2 id="receiveTitle">Pay Mina Nath</h2><img id="upiQr" class="qr largeQr" alt="UPI payment QR" />
+          <p id="upiAmountLabel" class="amountLine"></p><p id="upiIdLabel" class="muted tiny"></p>
+          <a id="upiPayLink" class="primary full payLink" href="#">Open UPI app</a>
+          <div class="formGrid"><button id="downloadPng" class="secondary" type="button">Download PNG</button><button id="downloadPdf" class="secondary" type="button">Download PDF</button></div>
+          <button id="shareAdmin" class="secondary full" type="button">Share receipt to admin on WhatsApp</button>
+          <p class="muted tiny">Payment is not marked received automatically. Verify the transaction first, then add it under Payment received.</p>
+        </div>
+        <p id="receiveMsg" class="message"></p>
+      </section>
+      <section class="panel">
+        <div class="sectionHead"><h2>Payment & admin settings</h2></div>
+        <form id="paySettingsForm">
+          <label>UPI ID<input id="settingsUpi" value="mn9981953@oksbi" required /></label>
+          <label>Payee name<input id="settingsUpiName" value="Mina Nath" required /></label>
+          <label>Admin WhatsApp number (with country code)<input id="settingsAdmin" type="tel" placeholder="91XXXXXXXXXX" /></label>
+          <button class="secondary full" type="submit">Save payment settings</button>
+        </form><p id="settingsMsg" class="message"></p>
+      </section>
+      <section class="panel">
+        <div class="sectionHead"><h2>Your ledger</h2><button id="exportBtn" class="ghost">Export CSV</button></div>
+        <div id="records" class="records"></div>
+      </section>
+      <section class="panel">
+        <h2>Public profile link</h2>
+        <p class="muted tiny">Anyone with your username link can view your ledger totals and records. Only you can edit them after login.</p>
+        <div class="shareline"><code id="profileUrl"></code><button id="copyBtn" class="secondary">Copy</button></div>
+      </section>
+    </section>
+    <section id="publicView" class="hidden">
+      <div class="publicHero"><div class="eyebrow">PUBLIC LEDGER PROFILE</div><h1 id="publicName"></h1><p class="muted">Read-only public view</p></div>
+      <div class="stats">
+        <article><small>Total lobbies</small><strong id="pLobbies">0</strong></article>
+        <article><small>Total earned</small><strong id="pEarned">₹0</strong></article>
+        <article><small>Received</small><strong id="pReceived">₹0</strong></article>
+        <article><small>Pending</small><strong id="pPending">₹0</strong></article>
+      </div>
+      <section class="panel"><h2>Lobby history</h2><div id="publicRecords" class="records"></div></section>
+      <section class="panel"><h2>Payment QR</h2><img id="publicQr" class="qr hidden" alt="Payment QR code" /><p class="muted tiny">This page is view-only. The owner must log in to make changes.</p></section>
+      <button id="homeBtn" class="secondary full">Open my account</button>
+    </section>
+    <footer>RUPAK LOBBY LEDGER <span>·</span> Built for mobile</footer>
+  </main>
+  <script type="module" src="/src.js"></script>
+</body>
+</html>
