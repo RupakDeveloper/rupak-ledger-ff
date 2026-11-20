@@ -1,0 +1,15 @@
+RUPAK LOBBY LEDGER - PROFILE VERIFICATION UI UPDATE
+
+This update adds:
+- Admin-only verification panel (uses the is_ledger_admin() SQL function created in Supabase).
+- Verify/remove badge controls for profiles.
+- A gold VERIFIED badge on public profile pages.
+
+IMPORTANT:
+- Keep the existing Supabase project and existing Cloudflare environment variables.
+- Do not delete/recreate any tables or Supabase projects.
+- The verification SQL must already have been run in the existing Supabase SQL Editor and your UID inserted into admin_users.
+- This update does not add hidden data collection or email users' private data to an admin.
+- Deploy by replacing the repository contents with this ZIP's files and commit/push to GitHub, then allow Cloudflare Pages to redeploy.
+
+Build was not verified in this environment due to npm install timeout.
