@@ -1,0 +1,9 @@
+PROFILE PHOTO SETUP
+
+1. Supabase Dashboard > SQL Editor > New query.
+2. Open avatar-storage-migration.sql from this project, paste its full contents, and Run once.
+3. Upload this project's changed files to GitHub preserving their folders; do not delete database records or run the old schema again.
+4. Wait for Cloudflare Pages to deploy.
+
+Profile photos: JPG, PNG, WEBP or GIF, maximum 3 MB. Each account can upload, replace, or remove its own avatar. The avatar bucket is public so uploaded profile image URLs can display; do not upload sensitive images.
+Migration adds only avatar_url and avatar storage/policies; existing ledger tables and rows are not removed.

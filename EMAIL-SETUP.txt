@@ -1,0 +1,9 @@
+AUTOMATIC PROFILE PDF EMAIL SETUP
+
+1. Create a Resend account and verify a sending domain. Obtain the API key.
+2. In Supabase Dashboard, open Edge Functions and deploy the function send-profile-summary from supabase/functions/send-profile-summary/index.ts (or deploy using Supabase CLI).
+3. Set Edge Function secrets: RESEND_API_KEY=your Resend API key; EMAIL_FROM=your verified sender, e.g. Ledger <no-reply@your-verified-domain>.
+4. Ensure Supabase Edge Function environment has SUPABASE_URL and SUPABASE_ANON_KEY available (standard project values).
+5. Deploy website. Profile submission button sends the consented PDF to rupakfx@gmail.com.
+
+The PDF contains username and ledger totals only. Consent is required. Do not place Resend API key in browser code.
